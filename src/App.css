@@ -1,0 +1,105 @@
+@import url("http://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700");
+
+*, html, body{margin:0; padding:0;}
+html, body{width:100%; height:100%; }
+html{font-family:'Roboto', sans-serif; font-weight: 400; color:#333;}
+body{position:relative; }
+input:focus {outline:none;}
+a{text-decoration: none; display:block;}
+ul{list-style: none; }
+div{box-sizing: border-box;}
+.marginBottom{margin-bottom:120px; }
+
+
+.App {
+  width:100%;
+  text-align: center;
+  /* margin-left: 50pt;
+  margin-right: 50pt;
+  margin-top: 50pt; */
+}
+
+.App-logo {
+  height: 40vmin;
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #09d3ac;
+}
+
+.center {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.App h1{
+  padding:120px 0;
+  background: url(bg450.jpg)center center no-repeat ;
+  background-size: cover;
+  color:#fff;
+}
+
+.App h1 span{
+  font-size: 22px;
+  font-weight: 400;
+}
+
+#content{
+  width:100%;
+  max-width:1200px;
+  margin:0 auto;
+}
+
+ul.info{
+  margin:40px 0;
+}
+ul.info li{
+  margin-bottom:6px;
+  padding:0 40px;
+  /* background: #F4F6F7; */
+  text-align:left;
+
+}
+
+ul.info li p{
+  display: inline-block;
+  /* line-height:2.6; */
+  word-break:break-all;
+}
+ul.info li p:first-child{
+  width:210px;
+  font-size:16px;
+}
+ul.info li p:nth-child(2){
+  font-size:18px;
+  font-weight:600;
+}
+
+ul.info li p>span{
+  font-size:16px;
+  font-weight:400;
+}
+
+ul.info li>span{
+ font-size: 12px;
+}
+
+
+#tab_Wrap{
+  width:100%;
+  float: left;
+  background: #F4F6F7;
+  padding-top: 120px;
+  padding-bottom: 80px;
+}

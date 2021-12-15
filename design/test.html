@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <link href="App.css" rel="stylesheet">
+  <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
+</head>
+<body>
+
+  <div className="App" class="App">
+
+    <h1>LEEDO ERC20 Token Bridge<br /><span>(Ethereum goerli to Matic mumbai)</span></h1>
+
+    <div id="content">
+      <ShowInstruction />
+
+      <ul class="info padding">
+        <li><p>Current network ID</p><p>{ networkList[this.state.chainId] }, {this.state.chainId}</p></li>
+        <li><p>Your Address</p><p>{this.state.myAddress}</p></li>
+        <li><p>Your balance in Ethereum</p><p>{ this.state.leedoBalance }<span> LEEDO</span></p><span> ({ leedoCoinAddress })</span></li>
+        <li><p>Your balance in Matic</p><p>{ this.state.leedoMaticBalance }<span> LEEDO</span></p><span> ({ maticCoinAddress })</span></li>
+      </ul>
+
+      <div id="tab_Wrap" class="padding">
+        <Tabs defaultActiveKey="deposit" onSelect={this.switchNetwork} id="uncontrolled-tab-example" className="mb-3">
+          <!--css 맞추기위해 임의로 넣음 -->
+          <ul class="tabnav">
+            <li><a href="#tab01">Ethereum -&gt; Matic</a></li>
+            <li><a href="#tab02">Matic -&gt; Ethereum</a></li>
+          </ul>
+          <!--css 맞추기위해 임의로 넣음 끝 -->
+
+
+          <Tab eventKey="deposit" title="Ethereum --&gt; Matic" class="tabcontent" id="tab01">
+
+            <p>
+              <Button onClick={this.claimFaucet} >Claim from Faucet</Button>
+              <div id="claimFaucetMessage"></div>
+            </p>
+
+            <p>
+              <InputGroup className="mb-3">
+                <!--css 맞추기위해 임의로 넣음 -->
+                <input type="text" id="depositAmount" placeholder="deposit amount (LEEDO) ..."></input>
+              <!--  <FormControl type="text" id="depositAmount" placeholder="deposit amount (LEEDO) ..." />-->
+                <Button onClick={this.depositToMatic} >Deposit to L2</Button>
+              </InputGroup>
+              <div id="depositMessage"></div>
+            </p>
+
+            <p><ProgressBar striped variant="warning" now={this.state.depositProgress} label={`${this.state.depositProgress}%`} /></p>
+
+          </Tab>
+
+          <Tab eventKey="withdraw" title="Matic --&gt; Ethereum" class="tabcontent"  id="tab02">
+
+            <p>
+              <InputGroup className="mb-3">
+                <!--css 맞추기위해 임의로 넣음 -->
+                <input type="text" id="withdrawAmount" placeholder="withdraw amount (LEEDO) ..."></input>
+              <!--   <FormControl type="text" id="withdrawAmount" placeholder="withdraw amount (LEEDO) ..." /> -->
+                <Button onClick={this.withdrawBurn} disabled={!this.state.maticConnected} >Withdraw - Burn</Button>
+              </InputGroup>
+              <div id="withdrawMessage"></div>
+            </p>
+
+            <p><ProgressBar striped variant="danger" now={this.state.burnProgress} label={`${this.state.burnProgress}%`} /></p>
+
+            <p><Button variant="dark" onClick={this.switchToRootChain} >Switch to Ethereum</Button></p>
+
+            <p>
+              <InputGroup className="mb-3">
+                <!--css 맞추기위해 임의로 넣음 -->
+                <input type="text" id="burntx" placeholder="copy a 'Unclaimed' burntx below and paste it here ..."></input>
+              <!--   <FormControl type="text" id="burntx" placeholder="copy a 'Unclaimed' burntx below and paste it here ..." /> -->
+                <Button onClick={this.withdrawExit} disabled={this.state.maticConnected} >Withdraw - Exit</Button>&nbsp;
+              </InputGroup>
+              <div id="exitMessage"></div>
+            </p>
+
+            <p><ProgressBar striped variant="success" now={this.state.exitProgress} label={`${this.state.exitProgress}%`} /></p>
+
+          </Tab>
+
+        </Tabs>
+      </div>
+
+
+      <div id="DataTable_wrap" class="padding">
+        <h2 class="title">Withdraw History</h2><!--css 맞추기위해 임의로 넣음 -->
+        <div>
+          <!--css 맞추기위해 임의로 넣음 -->
+          <table>
+            <thead>
+              <tr>
+                <th>BurnTx</th>
+                <th>Amount</th>
+                <th>Claimed</th>
+                <th>CreatedAt</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>0xe7c41DDD9b4ECd000c48d8f0f33e04EA6d8CD065</td>
+                <td>0.01</td>
+                <td>Unclaimed</td>
+                <td>2021-11-19T01:35:51.74456312355153135235613412341234</td>
+              </tr>
+              <tr>
+                <td>0xe7c41DDD9b4ECd000c48d8f0f33e04EA6d8CD065</td>
+                <td>0.01</td>
+                <td>Unclaimed</td>
+                <td>2021-11-19T01:35:51.74456312355153135235613412341234</td>
+              </tr>
+            </tbody>
+          </table>
+          <!--css 맞추기위해 임의로 넣음 끝-->
+
+          <DataTable
+                title='Withdraw History'
+                columns={ burnTxTableHeader }
+                data={ this.state.burnTxTableContents }
+                keyField='BurnTx'
+                defaultSortFieldId='Claimed'
+                defaultSortAsc={false}
+          />
+        </div>
+
+      </div>  <!-- DataTable_wrap end -->
+    </div> <!-- content end -->
+
+  <!--css 맞추기위해 임의로 넣음 -->
+  <script type="text/javascript">
+    $(document).ready(function(){
+      $('#uncontrolled-tab-example > .tabcontent').hide();
+      $('.tabnav a').click(function () {
+        $('#uncontrolled-tab-example > .tabcontent').hide().filter(this.hash).fadeIn();
+        $('.tabnav a').removeClass('active');
+        $(this).addClass('active');
+        return false;
+      }).filter(':eq(0)').click();
+    });
+  </script>
+    <!--css 맞추기위해 임의로 넣음 끝 -->
+
+</body>
+</html>
