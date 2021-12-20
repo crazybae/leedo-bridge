@@ -274,6 +274,38 @@ class App extends Component {
     }
   }
 
+  addL1Token = async () => {
+    await this.addToken(leedoCoinAddress);
+  }
+
+  addL2Token = async () => {
+    await this.addToken(maticCoinAddress);
+  }
+
+  addToken = async (tokenAddress) => {
+    await ethereum
+      .request({
+        method: "wallet_watchAsset",
+        params: {
+          type: "ERC20",
+          options: {
+            address: tokenAddress,
+            symbol: "LEEDO",
+            decimals: 18,
+            image: "https://gosquidgame.com/leedo_icon.png",
+          },
+        },
+      })
+      .then((success) => {
+        if (success) {
+          console.log("LEEDO successfully added to wallet!");
+        } else {
+          throw new Error("Something went wrong.");
+        }
+      })
+      .catch(console.error);
+  }
+
   ////////////////
   // contract ops
   ////////////////
@@ -510,22 +542,19 @@ class App extends Component {
 
           <div id="content">
 
-
             <ShowInstruction />
             <hr />
 
             <ul className="info padding">
               <li><p>Current network ID</p><p>{ networkList[this.state.chainId] }, {this.state.chainId}</p></li>
               <li><p>Your Address</p><p>{this.state.myAddress}</p></li>
-              <li><p>Your balance in Ethereum</p><p>{ this.state.leedoBalance }<span> LEEDO</span></p><span> ({ leedoCoinAddress })</span></li>
-              <li><p>Your balance in Matic</p><p>{ this.state.leedoMaticBalance }<span> LEEDO</span></p><span> ({ maticCoinAddress })</span></li>
+              <li><p>Your balance in Ethereum</p><p>{ this.state.leedoBalance }<span> LEEDO</span></p><span> ({ leedoCoinAddress })</span>&nbsp;
+                  <Button onClick={this.addL1Token} disabled={this.state.maticConnected} >Add L1 LEEDO into Wallet</Button>
+              </li>
+              <li><p>Your balance in Matic</p><p>{ this.state.leedoMaticBalance }<span> LEEDO</span></p><span> ({ maticCoinAddress })</span>&nbsp;
+                  <Button onClick={this.addL2Token} disabled={!this.state.maticConnected} >Add L2 LEEDO into Wallet</Button>
+              </li>
             </ul>
-
-
-            {/* <p>Current network is <b>{ networkList[this.state.chainId] }</b> having chain ID, {this.state.chainId}</p>
-            <p>Your Address is <b>{this.state.myAddress}</b></p>
-            <p>Your balance in Ethereum is <b>{ this.state.leedoBalance }</b> LEEDO  ({ leedoCoinAddress })</p>
-            <p>Your balance in Matic is <b>{ this.state.leedoMaticBalance }</b> LEEDO  ({ maticCoinAddress })</p> */}
 
             <div id="tab_Wrap" className="padding">
 
@@ -534,13 +563,13 @@ class App extends Component {
                 <Tab eventKey="deposit" title="Ethereum --&gt; Matic">
 
                   <p>
-                    <Button onClick={this.claimFaucet} >Claim from Faucet</Button>
+                    <Button onClick={this.claimFaucet} >Claim from Faucet (Goerli)</Button>
                     <div id="claimFaucetMessage"></div>
                   </p>
 
                   <p>
                   <InputGroup className="mb-3">
-                    <Button onClick={this.depositToMatic} >Deposit to L2</Button>
+                    <Button onClick={this.depositToMatic} >Deposit to L2</Button>&nbsp;
                     <FormControl type="text" id="depositAmount" placeholder="deposit amount (LEEDO) ..." />
                   </InputGroup>
                   <div id="depositMessage"></div></p>
@@ -552,7 +581,7 @@ class App extends Component {
 
                   <p>
                   <InputGroup className="mb-3">
-                    <Button onClick={this.withdrawBurn} disabled={!this.state.maticConnected} >Withdraw - Burn</Button>
+                    <Button onClick={this.withdrawBurn} disabled={!this.state.maticConnected} >Withdraw - Burn</Button>&nbsp;
                     <FormControl type="text" id="withdrawAmount" placeholder="withdraw amount (LEEDO) ..." />
                   </InputGroup>
                   <div id="withdrawMessage"></div></p>

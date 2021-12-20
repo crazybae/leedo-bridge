@@ -4,7 +4,7 @@ module.exports = {
         // L1
         nftCardAddress: '0xC814aFD17170d2A8c02C9f0E8B7bA8Bf96aB75Ff', // goerli nft
         leedoVaultAddress: '0xBF6CC26C2cA10B59AA68fca6EdAc0773cE306c97', // goerli vault
-        raffleAddress: "0xb109173Ab57Dab7F954Ef8F10D87a5bFDB740EEB", //mainnet
+        raffleAddress: "0xb109173Ab57Dab7F954Ef8F10D87a5bFDB740EEB", // mainnet
         leedoCoinAddress: '0x0435A8B653Af8868232D6D28Da949E78887ce336',  // goerli erc20 (LEEDO)
         leedoCoinDecimals: 18,
         leedoFaucetAddress: '0x319d089313BE756B369af1bC5E4498e43377E924', // goerli faucet
@@ -14,19 +14,19 @@ module.exports = {
         maticCoinDecimals: 18,
         maticNFTAddress: '0x2E39443148785c9be0d7343799Ed48672381e056', // matic mumbai nft (mapped with goerli vault)
         // static (by matic)
-        erc20PredicateAddress: "0xdD6596F2029e6233DEFfaCa316e6A95217d4Dc34", // goerli, approve --> transfer & lock
+        erc20PredicateAddress: '0xdD6596F2029e6233DEFfaCa316e6A95217d4Dc34', // goerli, approve --> transfer & lock
         erc721PredicateAddress: "0x74D83801586E9D3C4dc45FfCD30B54eA9C88cf9b", // goerli, approve --> transfer & lock
         rootChainManagerAddress: '0xBbD7cBFA79faee899Eaf900F13C9065bF03B1A74', // goerli, depostFor callee
-        childChainManagerAddress: '0xb5505a6d998549090530911180f38aC5130101c6', // mumbai
+        childChainManagerAddress: '0xb5505a6d998549090530911180f38aC5130101c6', // mumbai, deposit caller
         // chain info
-        L1ChainID: 5,    // ethereum goerli
-        L2ChainID: 80001,   // matic mumbai
+        L1ChainID: 5,    // ethereum goerli chainid
+        L2ChainID: 80001,   // matic mumbai chainid
         // rpc info
         parentProvider: `https://goerli.infura.io/v3/`,
         maticProvider: `https://rpc-mumbai.maticvigil.com/`,
         leedoBridgeServerAddress: 'https://api.gosquidgame.com/',
     },
-    mainnet: {
+    mainnet: { // to be updated
         // L1
         nftCardAddress: '0xBE5C953DD0ddB0Ce033a98f36C981F1B74d3B33f', // mainnet nft
         leedoVaultAddress: '0x0866f2af4cf0b601A1a2c4eBD56CBB954a1cF004', // mainnet vault

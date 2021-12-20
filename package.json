@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "This project is a beta version of LEEDO ERC20 token bridge between Ethereum and Matic.",
   "main": "index.js",
-  "homepage": "https://mrgreatyoungman.github.io/leedo-bridge/",
+  "homepage": "https://crazybae.github.io/leedo-bridge/",
   "dependencies": {
     "@maticnetwork/maticjs": "^2.0.48",
     "bignumber.js": "^9.0.1",
